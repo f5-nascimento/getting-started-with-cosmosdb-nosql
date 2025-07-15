@@ -19,94 +19,111 @@ Guiar a criação de um banco NoSQL na nuvem com o **Azure Cosmos DB**, permitin
 
 ---
 
+## 2. Criar um Grupo de Recursos
+
+<img width="706" height="631" alt="image" src="https://github.com/user-attachments/assets/8866f2f2-07b8-4abc-91bc-ca239a7e4edd" />
+
+Antes de criar o Azure Cosmos DB, é **necessário criar um Grupo de Recursos**. Isso evita erros relacionados à localização durante a criação.
+
+- No Portal do Azure, clique em **Grupos de recursos** no menu lateral esquerdo.
+- Clique em **+ Criar**.
+- Em **Assinatura**: Selecione sua assinatura ativa (ex: `Azure for Students` ou `Azure subscription 1`)
+- Em **Nome do grupo de recursos**: escolha um nome (ex: `lab-cosmosdb`)
+- Em **Região**: selecione `West US 2`
+- Clique em **Revisar e criar**.
+- Clique em **Criar** para finalizar.
+
+> ⚠️ Importante: criar o grupo de recursos antes evita erros de incompatibilidade de localização durante a criação do Cosmos DB.
+
+
 ### 2. Buscar por Azure Cosmos DB
 
-- Na barra de pesquisa do portal, digite: `Cosmos DB`
+<img width="1051" height="278" alt="cdb" src="https://github.com/user-attachments/assets/5139ea5a-eee7-4cc5-8561-a3aba7b55121" />
+
+- Na barra de pesquisa do portal, digite: `Azure Cosmos DB`
 - Clique em **Azure Cosmos DB**
+- Na tela principal do Azure Cosmos DB, clique em **Criar**
 
 ---
 
 ### 3. Iniciar Criação de uma Instância
 
-- Clique em **Criar**
-- Escolha a opção **API do Core (SQL)** para banco NoSQL com estrutura semelhante ao JSON.
+<img width="877" height="473" alt="nosql" src="https://github.com/user-attachments/assets/7cb5c428-f98a-448d-91a2-d280311e1ec0" />
 
----
-
-### 4. Preencher Informações Básicas
-
-- **Assinatura**: Selecione a que estiver ativa
-- **Grupo de recursos**: Escolha um existente ou crie um novo (ex: `lab-recursos`)
-- **Nome da conta**: Escolha um nome global único (ex: `lab-cosmosdb-demo`)
-- **API**: Core (SQL)
-- **Localização**: Escolha uma região compatível, como `East US`, `West US 2`, `Brazil South`, etc.
-- **Zonas de disponibilidade**: Pode deixar **Desabilitado** para fins de teste ou demonstração.
-
----
-
-### 5. Selecionar Modo de Capacidade
-
-- Escolha entre:
-  - **Serverless** (ideal para testes, baixa demanda e uso pontual)
-  - **Taxa de transferência provisionada** (para produção ou maior controle)
-
-> Para esse caso de uso simples e educacional, selecione **Serverless**
-
----
-
-### 6. Finalizar a Criação
-
+- Na tela **Create an Azure Cosmos DB account**, em *Recommended APIs*, escolha a opção **Azure Cosmos DB for NoSQL**.
+- Clique em **Create**.
+- Em **Workload Type**, selecione Learning.
+- **Assinatura**: Selecione sua assinatura ativa (ex: `Azure for Students` ou `Azure subscription 1`)
+- **Grupo de recursos**: Selecione um existente (ex: `lab-cosmosdb`) ou clique em **Criar novo**
+- **Nome da conta**: Escolha um nome global único (ex: `exemplo-cosmosdb`)
+- **Availability Zones**: Pode deixar **Desabilitado** para fins de teste ou demonstração
+- **Localização**: Escolha uma região próxima ou mais barata (ex: `East US 2`)
+- **Modo de capacidade**: Escolha **Serverless** (ideal para testes, baixa demanda e uso pontual)
 - Clique em **Examinar + Criar**
 - Aguarde a validação
 - Clique em **Criar**
+- Uma mensagem de **A implantação foi concluída** deve ser exibida ao final do processo
+- Após isso clique em **Ir para o recurso**
 
 ---
 
-### 7. Criar o Banco de Dados e a Coleção
+### 4. Criar o Banco de Dados e a Coleção
 
-Após a implantação:
+<img width="1342" height="433" alt="dataexplorer" src="https://github.com/user-attachments/assets/84b0892c-9f18-4309-856c-9c5a9785b69d" />
 
-1. Vá até a instância criada do Cosmos DB.
-2. No menu lateral, clique em **Data Explorer (Explorador de Dados)**.
-3. Clique em **New Container** para criar o banco e coleção:
-
-   - **Database ID**: `escola`
-   - **Container ID**: `instrutores`
-   - **Partition Key**: `/id` (ou outro campo único)
-   - Marque a opção **Throughput** desmarcada (caso serverless)
-   - Clique em **OK**
+- No menu lateral, clique em **Data Explorer (Explorador de Dados)**.
+- Clique em **New Container** para criar o banco e a coleção.
+- Em **Database ID**, marque a opção **Create new** e defina o nome do banco (ex: `alocacao`).
+  > 💡 *Caso já tenha um banco criado, selecione a opção **Use existing** e escolha o banco desejado.*
+- Em **Container ID**, digite o nome da coleção (ex: `instrutores`).
+- Em **Partition key**, defina uma chave de partição (ex: `/id`).
+- Clique em **OK** para finalizar a criação.
 
 ---
 
-### 8. Inserir Dados
+### 5. Selecionando o Ambiente de Dados
 
-1. Clique na coleção criada (`escola > instrutores`)
-2. Clique em **New Item**
-3. Cole o seguinte JSON:
+<img width="963" height="437" alt="items" src="https://github.com/user-attachments/assets/a41f26f6-1f68-4d26-9eb7-7aee8a0296bd" />
+
+- No menu lateral, clique no banco de dados criado (ex: `alocacao`).
+- Em seguida, clique na coleção (ex: `instrutores`).
+- Clique em **Items**.
+- Depois, clique em **New Item** para adicionar um novo documento.
+
+### 6. Inserindo os Dados
+
+<img width="1077" height="518" alt="image" src="https://github.com/user-attachments/assets/82af221d-65db-4972-9267-f581efcf89cf" />
+
+- Clique na coleção criada (ex: `alocacao`)
+- Clique em instrutores
+- Clique em Items
+- Clique em **New Item**
+- Cole o seguinte JSON:
 
 ```json
 {
-  "id": "1",
-  "instrutor": "Débora",
+  "instrutor": "Mikasa",
   "cursos": [
     {
       "nome": "Back End",
       "carga_horaria": 80
     },
     {
-      "nome": "Administrador de Banco de Dados",
-      "carga_horaria": 200
+      "nome": "Front End"
     }
   ]
 }
 ```
+- Clique em **Save** para adicionar o primeiro registro
+- Clique novamente em **New Item**
+- Cole o seguinte JSON:
 
-### 9. Consultar Dados
-
-1. Vá até a aba Query
-2. Escreva a seguinte consulta: 
 ```json
-SELECT * FROM instrutores
+{
+  "instrutor": "Eren"
+}
 ```
-3. Clique em Execute Query
+- Clique em **Save** para adicionar o segundo registro
+- Após isso baste clicar em **Apply Filter** para visualizar os registros criados
+
 
